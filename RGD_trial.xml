@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<mvdXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" uuid="00000000-0000-0000-0000-000000000000"
+	name="" xmlns="http://buildingsmart-tech.org/mvdXML/mvdXML1-1">
+	<Templates>
+		<ConceptTemplate uuid="3a0e6536-f2bb-46bd-a58a-eaa55511fabd"
+			name="SingleValueProperty" applicableSchema="IFC4" applicableEntity="IfcObject">
+			<Rules>
+				<AttributeRule AttributeName="IsDefinedBy"
+					Cardinality="OneToMany">
+					<EntityRules>
+						<EntityRule EntityName="IfcRelDefinesByProperties"
+							Cardinality="_asSchema">
+							<AttributeRules>
+								<AttributeRule AttributeName="RelatingPropertyDefinition"
+									Cardinality="_asSchema">
+									<EntityRules>
+										<EntityRule EntityName="IfcPropertySet"
+											Cardinality="_asSchema">
+											<AttributeRules>
+												<AttributeRule AttributeName="HasProperties"
+													Cardinality="_asSchema">
+													<EntityRules>
+														<EntityRule EntityName="IfcPropertySingleValue"
+															Cardinality="_asSchema">
+															<AttributeRules>
+																<AttributeRule RuleID="PropertyName"
+																	AttributeName="Name" Cardinality="_asSchema" />
+																<AttributeRule RuleID="PropertyValue"
+																	AttributeName="NominalValue" Cardinality="_asSchema" />
+																<AttributeRule RuleID="PropertyUnit"
+																	AttributeName="Unit" Cardinality="_asSchema" />
+															</AttributeRules>
+														</EntityRule>
+													</EntityRules>
+												</AttributeRule>
+												<AttributeRule RuleID="PropertySetName"
+													AttributeName="Name" Cardinality="_asSchema" />
+											</AttributeRules>
+										</EntityRule>
+									</EntityRules>
+								</AttributeRule>
+							</AttributeRules>
+						</EntityRule>
+					</EntityRules>
+				</AttributeRule>
+			</Rules>
+		</ConceptTemplate>
+	</Templates>
+	<Views>
+		<ModelView uuid="dce6f5c2-cd73-4c6d-9a13-690be9adf597" name="Rgd"
+			applicableSchema="IFC4">
+			<ExchangeRequirements>
+				<ExchangeRequirement uuid="7d3dd1bf-37b0-4c50-bf6e-7ec4d7a6e52f"
+					name="Rgd standard" applicability="both" />
+			</ExchangeRequirements>
+			<Roots>
+				<ConceptRoot uuid="58de55a3-16b0-4a25-b7ec-ed4609ccc97f"
+					name="" applicableRootEntity="IfcDoor">
+					<Concepts>
+						<Concept uuid="f584d43e-5855-4486-9f9b-e62fb0d4e80d" name="SingleValueProperty"
+							override="false">
+							<Template ref="3a0e6536-f2bb-46bd-a58a-eaa55511fabd" />
+							<Definitions>
+								<Definition>
+									<Body lang="en"><![CDATA[<p>This concept requires all the doors should have DoorCommon Pset and have perperties of FireExit and SelfClosing. 
+									RGD 2.2.7.8 Attributes: Specifically for an IFC object which provides access to a space, such as a door, the following properties are additionally applicable:
+									Pset_###Common
+									o FireExit: [True|False]
+									o SelfClosing: [True|False]
+									o SmokeStop: [True|False]</p>]]>
+									</Body>
+								</Definition>
+							</Definitions>
+							<Requirements />
+							<Rules>
+								<TemplateRule
+									Parameters="PropertyName='FireExit' AND PropertySetName='PSet_DoorCommon'" />
+								<TemplateRule
+									Parameters="PropertyName='SelfClosing' AND PropertySetName='PSet_DoorCommon'" />
+							</Rules>
+						</Concept>
+					</Concepts>
+				</ConceptRoot>
+			</Roots>
+		</ModelView>
+	</Views>
+</mvdXML>

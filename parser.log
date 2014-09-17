@@ -1,0 +1,42 @@
+PASS one:IfcBoxAlignment
+PASS one:IfcNormalisedRatioMeasure
+PASS one:IfcPositiveLengthMeasure
+PASS one:IfcPositivePlaneAngleMeasure
+PASS one:IfcPositiveRatioMeasure
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+IfcBoxAlignmentPASS 2 get TYPEREF:IfcLabel
+IfcNormalisedRatioMeasurePASS 2 get TYPEREF:IfcRatioMeasure
+IfcPositiveLengthMeasurePASS 2 get TYPEREF:IfcLengthMeasure
+IfcPositivePlaneAngleMeasurePASS 2 get TYPEREF:IfcPlaneAngleMeasure
+IfcPositiveRatioMeasurePASS 2 get TYPEREF:IfcRatioMeasure
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+PASS one:IfcBoxAlignment
+PASS one:IfcNormalisedRatioMeasure
+PASS one:IfcPositiveLengthMeasure
+PASS one:IfcPositivePlaneAngleMeasure
+PASS one:IfcPositiveRatioMeasure
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat
+aggregat

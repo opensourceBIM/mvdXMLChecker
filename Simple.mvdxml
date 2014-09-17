@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<mvdXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" uuid="00000001-0000-0000-0000-000000000001" xmlns="http://buildingsmart-tech.org/mvdXML/mvdXML1-0">
+  <Definitions />
+  <Templates>
+    <ConceptTemplate uuid="5aea2649-d252-41b8-a735-9efec1e7c0fa" name="Aggregates" applicableSchema="IFC2X4" applicableEntity="IfcObjectDefinition">
+      <Definitions />
+      <Rules>
+        <AttributeRule AttributeName="IsDecomposedBy" Cardinality="One">
+          <EntityRules>
+            <EntityRule EntityName="IfcRelAggregates" Cardinality="One">
+              <AttributeRules>
+                <AttributeRule RuleID="Type" AttributeName="RelatedObjects" Cardinality="One">
+                  <EntityRules>
+                    <EntityRule EntityName="IfcObject" Cardinality="One">
+                      <AttributeRules />
+                      <EntityRules />
+                    </EntityRule>
+                  </EntityRules>
+                  <AttributeConstraints />
+                </AttributeRule>
+              </AttributeRules>
+              <EntityRules />
+            </EntityRule>
+          </EntityRules>
+          <AttributeConstraints />
+        </AttributeRule>
+      </Rules>
+      <SubTemplates>
+      </SubTemplates>
+    </ConceptTemplate>
+  </Templates>
+  <Views>
+    <ModelView uuid="37b05b7f-2097-4475-8404-02b63e5de435" name="Simple" applicableSchema="IFC2X4">
+      <Definitions />
+      <ExchangeRequirements>
+        <ExchangeRequirement uuid="bb8ca0bd-0f62-416c-b8e4-051b90c3173a" name="Spaces" applicability="default">
+          <Definitions />
+        </ExchangeRequirement>
+      </ExchangeRequirements>
+      <Roots>
+        <ConceptRoot uuid="8a7352a8-d974-4eda-be96-983c346f6b17" applicableRootEntity="IfcBuilding">
+          <Definitions />
+          <Concepts>
+            <Concept uuid="30b7adfb-fb9d-4bf0-8f7c-49449fe65843" name="Aggregates">
+              <Definitions />
+              <Template ref="5aea2649-d252-41b8-a735-9efec1e7c0fa" />
+              <Requirements />
+              <Rules>
+                <TemplateRule Parameters="Type=IfcBuildingStorey;" />
+              </Rules>
+              <SubConcepts />
+            </Concept>
+          </Concepts>
+        </ConceptRoot>
+        <ConceptRoot uuid="0af1f241-8533-4d68-bbdb-37b0e7bdaa89" applicableRootEntity="IfcBuildingStorey">
+          <Definitions />
+          <Concepts>
+            <Concept uuid="19d7340b-0d7b-497c-b6f8-df6dd7f41ab7" name="Aggregates">
+              <Definitions />
+              <Template ref="5aea2649-d252-41b8-a735-9efec1e7c0fa" />
+              <Requirements />
+              <Rules>
+                <TemplateRule Parameters="Type=IfcSpace;" />
+              </Rules>
+              <SubConcepts />
+            </Concept>
+          </Concepts>
+        </ConceptRoot>
+        <ConceptRoot uuid="5efb6253-913b-4256-8d4d-60a0f4bfbffc" applicableRootEntity="IfcProject">
+          <Definitions />
+          <Concepts>
+            <Concept uuid="595038c5-2cbb-4a2c-91f5-c511832e988b" name="Aggregates">
+              <Definitions />
+              <Template ref="5aea2649-d252-41b8-a735-9efec1e7c0fa" />
+              <Requirements />
+              <Rules>
+                <TemplateRule Parameters="Type=IfcSite;" />
+              </Rules>
+              <SubConcepts />
+            </Concept>
+          </Concepts>
+        </ConceptRoot>
+        <ConceptRoot uuid="7bcdff4d-777b-463a-849b-a5393e257eeb" applicableRootEntity="IfcSite">
+          <Definitions />
+          <Concepts>
+            <Concept uuid="5ca96f4c-642a-4cf1-92b2-af9a4f689005" name="Aggregates">
+              <Definitions />
+              <Template ref="5aea2649-d252-41b8-a735-9efec1e7c0fa" />
+              <Requirements>
+                <Requirement applicability="import" requirement="mandatory" exchangeRequirement="bb8ca0bd-0f62-416c-b8e4-051b90c3173a" />
+                <Requirement applicability="export" requirement="optional" exchangeRequirement="bb8ca0bd-0f62-416c-b8e4-051b90c3173a" />
+              </Requirements>
+              <Rules>
+                <TemplateRule Parameters="Type=IfcBuilding;" />
+              </Rules>
+              <SubConcepts />
+            </Concept>
+          </Concepts>
+        </ConceptRoot>
+      </Roots>
+    </ModelView>
+  </Views>
+</mvdXML>
