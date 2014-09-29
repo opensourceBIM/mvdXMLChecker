@@ -1,6 +1,9 @@
 package nl.tue.ddss.ifc_check;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.*;
@@ -10,6 +13,9 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
+
+
+
 
 //import org.apache.commons.jxpath.JXPathContext;
 import org.buildingsmart_tech.mvdxml.mvdxml1_1.*;
@@ -23,14 +29,18 @@ public class MvdXMLParser {
 	
 	public MvdXML getMvdXML() {
 		return mvdXML;
-
 	}
 
-	public MvdXMLParser(String fileName) throws JAXBException {
+	public MvdXMLParser(String fileName, ClassLoader classLoader) throws JAXBException, FileNotFoundException {
+		this(new FileInputStream(new File(fileName)), classLoader);
+	}
+	
+	public MvdXMLParser(InputStream inputStream, ClassLoader classLoader) throws JAXBException {
 		JAXBContext mvdXMLSchema = JAXBContext
-				.newInstance("org.buildingsmart_tech.mvdxml.mvdxml1_1");
+				.newInstance("org.buildingsmart_tech.mvdxml.mvdxml1_1", classLoader);
 		Unmarshaller unmarshaller = mvdXMLSchema.createUnmarshaller();
-		StreamSource streamSource = new StreamSource(new File(fileName));
+		unmarshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
+		StreamSource streamSource = new StreamSource(inputStream);
 		JAXBElement<MvdXML> root = unmarshaller.unmarshal(streamSource,
 				MvdXML.class);
 		this.mvdXML = root.getValue();

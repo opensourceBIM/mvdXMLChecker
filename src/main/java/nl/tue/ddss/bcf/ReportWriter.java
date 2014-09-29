@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -15,8 +16,6 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-
-import org.bimserver.plugins.deserializers.DeserializeException;
 import org.apache.commons.io.IOUtils;
 import org.bimserver.bcf.Bcf;
 import org.bimserver.bcf.BcfException;
@@ -31,11 +30,9 @@ import org.bimserver.bcf.visinfo.Direction;
 import org.bimserver.bcf.visinfo.PerspectiveCamera;
 import org.bimserver.bcf.visinfo.Point;
 import org.bimserver.bcf.visinfo.VisualizationInfo;
-import org.bimserver.shared.BimServerClientFactory;
-import org.bimserver.shared.ChannelConnectionException;
 import org.bimserver.client.json.JsonBimServerClientFactory;
+import org.bimserver.emf.IfcModelInterface;
 import org.bimserver.emf.ModelMetaData;
-import org.bimserver.ifc.IfcModel;
 import org.bimserver.interfaces.objects.SActionState;
 import org.bimserver.interfaces.objects.SDeserializerPluginConfiguration;
 import org.bimserver.interfaces.objects.SIfcHeader;
@@ -44,7 +41,10 @@ import org.bimserver.interfaces.objects.SProject;
 import org.bimserver.interfaces.objects.SRevision;
 import org.bimserver.interfaces.objects.SSerializerPluginConfiguration;
 import org.bimserver.models.ifc2x3tc1.IfcProject;
+import org.bimserver.plugins.deserializers.DeserializeException;
 import org.bimserver.plugins.services.BimServerClientInterface;
+import org.bimserver.shared.BimServerClientFactory;
+import org.bimserver.shared.ChannelConnectionException;
 import org.bimserver.shared.PublicInterfaceNotFoundException;
 import org.bimserver.shared.UsernamePasswordAuthenticationInfo;
 import org.bimserver.shared.exceptions.ServerException;
@@ -61,11 +61,9 @@ public class ReportWriter {
 	private BimServerClientInterface bimServerClient;
 	Set<Long> roids;
 
-	public ReportWriter(IfcModel ifcModel, String file)
+	public ReportWriter(IfcModelInterface ifcModel)
 			throws DeserializeException {
-
 		bcf = new Bcf();
-		File ifcFile = new File(file);
 		List<IfcProject> projects = ifcModel.getAll(IfcProject.class);
 		if (projects.size() != 1)
 			throw new RuntimeException(
@@ -79,8 +77,6 @@ public class ReportWriter {
 			sIfcHeaderFilename = sIfcHeader.getFilename();
 			sIfcHeaderTimeStamp = sIfcHeader.getTimeStamp();
 		}
-		exportToCollada(ifcFile);
-		
 	}
 	
 	public void exportToCollada(File ifcFile){
@@ -231,17 +227,11 @@ public class ReportWriter {
 		bcf.addIssue(issue);
 	}
 
-
-	public void writeReport(String output) {
-
-		FileOutputStream outputStream;
+	public void writeReport(OutputStream outputStream) {
 		try {
-			outputStream = new FileOutputStream(
-					output);
 			bcf.write(outputStream);
 		} catch (BcfException | IOException e) {
 			e.printStackTrace();
 		}
-		new File("TempGeometry.txt").delete();
 	}
 }

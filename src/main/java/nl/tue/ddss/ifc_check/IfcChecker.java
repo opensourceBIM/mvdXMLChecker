@@ -1,11 +1,12 @@
 package nl.tue.ddss.ifc_check;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.HashMap;
 import java.util.Set;
 
 import javax.xml.bind.JAXBException;
@@ -14,13 +15,16 @@ import javax.xml.parsers.ParserConfigurationException;
 import nl.tue.buildingsmart.express.parser.SchemaLoader;
 import nl.tue.ddss.bcf.ReportWriter;
 import nl.tue.ddss.ifc_check.IfcHashMapBuilder.ObjectToValue;
-import nl.tue.ddss.rule_parse.*;
+import nl.tue.ddss.rule_parse.MvdXMLv1_1Lexer;
+import nl.tue.ddss.rule_parse.MvdXMLv1_1Parser;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CharStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
 import org.antlr.runtime.TokenStream;
+import org.bimserver.emf.IdEObject;
+import org.bimserver.emf.IfcModelInterface;
 import org.bimserver.ifc.IfcModel;
 import org.bimserver.ifc.step.deserializer.IfcStepDeserializer;
 import org.bimserver.models.ifc2x3tc1.IfcElement;
@@ -32,18 +36,23 @@ import org.bimserver.models.ifc2x3tc1.IfcRoot;
 import org.bimserver.models.ifc2x3tc1.IfcSpatialStructureElement;
 import org.bimserver.plugins.deserializers.DeserializeException;
 import org.bimserver.plugins.schema.SchemaDefinition;
-import org.bimserver.emf.IdEObject;
-import org.buildingsmart_tech.mvdxml.mvdxml1_1.*;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.AbstractRule;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.AttributeRule;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.Concept;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.ConceptRoot;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.Definitions;
 import org.buildingsmart_tech.mvdxml.mvdxml1_1.Definitions.Definition;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.EntityRule;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.ExchangeRequirement;
 import org.buildingsmart_tech.mvdxml.mvdxml1_1.Requirements.Requirement;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.TemplateRule;
 import org.xml.sax.SAXException;
-import org.apache.commons.jxpath.*;
 
 public class IfcChecker {
 	String ifcFile;
 	List<MVDConstraint> constraints;
 	MVDConstraint constraint;
-	IfcModel ifcModel;
+	IfcModelInterface ifcModel;
 	ExchangeRequirement er;
 	
 	
@@ -59,9 +68,13 @@ public class IfcChecker {
 			}
 		}
 	}
-	
 
-	public IfcChecker(String ifcSchema,String ifcFile, MVDConstraint constraint)
+	public IfcChecker(IfcModelInterface ifcModel, MVDConstraint constraint) {
+		this.constraint = constraint;
+		this.ifcModel = ifcModel;
+	}
+
+	public IfcChecker(String ifcSchema, String ifcFile, MVDConstraint constraint)
 			throws DeserializeException {
 		this.ifcFile = ifcFile;
 		this.constraint = constraint;
@@ -72,7 +85,7 @@ public class IfcChecker {
 		this.ifcModel = (IfcModel) p21Parser.read(new File(ifcFile));
 	}
 
-	public void checkIfcModel(String outputFolder) throws JAXBException {
+	public void checkIfcModel(OutputStream outputStream) throws JAXBException {
 
 		String rootName = constraint.getConceptRoot().getApplicableRootEntity();
 		List<AttributeRule> attributeRules = constraint.getAttributeRules();
@@ -130,15 +143,13 @@ public class IfcChecker {
 						List<String> componantGuids = new LinkedList<String>();
 						componantGuids = getComponantGuids(componantGuids,
 								(IfcProduct) ifcObject);
-						ReportWriter reportWriter = new ReportWriter(ifcModel,
-								ifcFile);
+						
+						ReportWriter reportWriter = new ReportWriter(ifcModel);
 						try {
 							reportWriter.addIssue(spatialStructureElement,
 									((IfcProduct) ifcObject).getGlobalId(),
 									comment, componantGuids);
-							reportWriter.writeReport(outputFolder
-									+ constraint.getConcept().getUuid() + "_"
-									+ issueIndex + ".bcfzip");
+							reportWriter.writeReport(outputStream);
 						} catch (SAXException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

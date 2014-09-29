@@ -31,7 +31,7 @@ public class IfcParserAdd {
 					.getSchema();
 			p21Parser.init(schema);
 				IfcModel ifcModel = (IfcModel) p21Parser.read(new File("simpel huisje.ifc"));
-				ReportWriter reportWriter = new ReportWriter(ifcModel,"simpel huisje.ifc");
+				ReportWriter reportWriter = new ReportWriter(ifcModel);
 				String guid="1AbdMDvZjDiP8GfhziNl_j";
 				List<String> guids=new ArrayList<String>();
 				guids.add(guid);
