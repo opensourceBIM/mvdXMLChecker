@@ -113,7 +113,7 @@ public class ReportWriter {
 						.getBimsie1ServiceInterface()
 						.getDownloadData(downloadId).getFile().getInputStream();
 				FileOutputStream fileOutputStream = new FileOutputStream(
-						new File("C:\\Temp\\TempGeometry.dae"));
+						File.createTempFile("Model_View_Checker", ""));
 				IOUtils.copy(inputStream, fileOutputStream);
 				fileOutputStream.close();
 			}
@@ -174,7 +174,7 @@ public class ReportWriter {
     
     private VisualizationInfo addVisInfo(String ifcGuid,List<String> ifcGuids) throws SAXException, ParserConfigurationException{
     	TempGeometry tempGeometry = new TempGeometry();
-		tempGeometry.cleanUp(ifcGuids);
+//		tempGeometry.cleanUp(ifcGuids);
 		VisualizationInfo visualizationInfo = new VisualizationInfo();
 
 		Component component1 = new Component();

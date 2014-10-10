@@ -6,7 +6,6 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.*;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -14,12 +13,18 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 
-
-
-
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.AbstractRule;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.AttributeRule;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.Concept;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.ConceptRoot;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.ConceptTemplate;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.EntityRule;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.ModelView;
 //import org.apache.commons.jxpath.JXPathContext;
-import org.buildingsmart_tech.mvdxml.mvdxml1_1.*;
-import org.buildingsmart_tech.mvdxml.mvdxml1_1.Requirements.Requirement;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.MvdXML;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.ObjectFactory;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.Rules;
+import org.buildingsmart_tech.mvdxml.mvdxml1_1.TemplateRule;
 
 public class MvdXMLParser {
 
@@ -36,13 +41,12 @@ public class MvdXMLParser {
 	}
 	
 	public MvdXMLParser(InputStream inputStream, ClassLoader classLoader) throws JAXBException {
-		JAXBContext mvdXMLSchema = JAXBContext
-				.newInstance("org.buildingsmart_tech.mvdxml.mvdxml1_1", classLoader);
+		System.out.println(classLoader);
+		JAXBContext mvdXMLSchema = JAXBContext.newInstance("org.buildingsmart_tech.mvdxml.mvdxml1_1", classLoader);
 		Unmarshaller unmarshaller = mvdXMLSchema.createUnmarshaller();
 		unmarshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
 		StreamSource streamSource = new StreamSource(inputStream);
-		JAXBElement<MvdXML> root = unmarshaller.unmarshal(streamSource,
-				MvdXML.class);
+		JAXBElement<MvdXML> root = unmarshaller.unmarshal(streamSource, MvdXML.class);
 		this.mvdXML = root.getValue();
 	}
 

@@ -2,6 +2,7 @@ package org.bimserver.plugin.modelviewchecker;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
@@ -37,6 +38,8 @@ import org.bimserver.shared.exceptions.ServerException;
 import org.bimserver.shared.exceptions.UserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Charsets;
 
 public class ModelViewCheckerServicePlugin extends ServicePlugin {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ModelViewCheckerServicePlugin.class);
@@ -97,7 +100,6 @@ public class ModelViewCheckerServicePlugin extends ServicePlugin {
 
 	@Override
 	public void register(PluginConfiguration pluginConfiguration) {
-		
 		ServiceDescriptor serviceDescriptor = StoreFactory.eINSTANCE.createServiceDescriptor();
 		serviceDescriptor.setProviderName("BIMserver");
 		serviceDescriptor.setIdentifier(getClass().getName());
@@ -118,6 +120,7 @@ public class ModelViewCheckerServicePlugin extends ServicePlugin {
 				try {
 					IfcModelInterface model = bimServerClientInterface.getModel(poid, roid, false);
 						
+					System.out.println(new String(mvdXMLData, Charsets.UTF_8));
 					MvdXMLParser mvdXMLParser = new MvdXMLParser(new ByteArrayInputStream(mvdXMLData), pluginClassLoader);
 					ByteArrayOutputStream bcfOutput = new ByteArrayOutputStream();
 					try {

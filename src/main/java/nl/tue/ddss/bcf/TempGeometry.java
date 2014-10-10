@@ -38,10 +38,10 @@ public class TempGeometry {
 	void cleanUp(List<String> guids) throws SAXException,
 			ParserConfigurationException {
 		try {
-			File file = new File("C:\\Temp\\TempGeometry.dae");
 			Matrix4d matrix = new Matrix4d();
 			matrix.setIdentity();
-			boundingBox = ColladaBB.getBoundingBox(file, matrix, guids);
+			File tempFile = File.createTempFile("Model_View_Checker", null);
+			boundingBox = ColladaBB.getBoundingBox(tempFile, matrix, guids);
 			System.out.println(guids.size());
 			System.out.println(guids.get(0));
 
@@ -49,7 +49,7 @@ public class TempGeometry {
 			Point3d min = boundingBox.getMin();
 			
 			if (max==null||min==null){
-				globalBB=ColladaGlobalBB.getGlobalBB(file, matrix);
+				globalBB=ColladaGlobalBB.getGlobalBB(tempFile, matrix);
 				max=globalBB.getMax();
 				min=globalBB.getMin();
 			}
