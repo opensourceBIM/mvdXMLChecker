@@ -41,7 +41,6 @@ public class MvdXMLParser {
 	}
 	
 	public MvdXMLParser(InputStream inputStream, ClassLoader classLoader) throws JAXBException {
-		System.out.println(classLoader);
 		JAXBContext mvdXMLSchema = JAXBContext.newInstance("org.buildingsmart_tech.mvdxml.mvdxml1_1", classLoader);
 		Unmarshaller unmarshaller = mvdXMLSchema.createUnmarshaller();
 		unmarshaller.setEventHandler(new javax.xml.bind.helpers.DefaultValidationEventHandler());
