@@ -65,7 +65,7 @@ public class ModelViewCheckerServicePlugin extends ServicePlugin {
 
 	@Override
 	public void register(SInternalServicePluginConfiguration internalServicePluginConfiguration, PluginConfiguration pluginConfiguration) {
-		final String targetNamespace = "[TO BE DETERMINED]";
+		final String targetNamespace = "http://www.buildingsmart-tech.org/specifications/bcf-releases";
 
 		serviceDescriptor = StoreFactory.eINSTANCE.createServiceDescriptor();
 		serviceDescriptor.setProviderName("BIMserver");
