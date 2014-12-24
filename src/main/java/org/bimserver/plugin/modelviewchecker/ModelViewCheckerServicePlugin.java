@@ -64,7 +64,7 @@ public class ModelViewCheckerServicePlugin extends ServicePlugin {
 	}
 
 	@Override
-	public void register(SInternalServicePluginConfiguration internalServicePluginConfiguration, PluginConfiguration pluginConfiguration) {
+	public void register(long uoid, SInternalServicePluginConfiguration internalServicePluginConfiguration, PluginConfiguration pluginConfiguration) {
 		final String targetNamespace = "http://www.buildingsmart-tech.org/specifications/bcf-releases";
 
 		serviceDescriptor = StoreFactory.eINSTANCE.createServiceDescriptor();
@@ -80,7 +80,7 @@ public class ModelViewCheckerServicePlugin extends ServicePlugin {
 		final byte[] mvdXMLData = pluginConfiguration.getByteArray(MVD_XML_PARAMETER_NAME);
 
 		if (mvdXMLData != null) {
-			registerNewRevisionHandler(serviceDescriptor, new ModelViewCheckerNewRevisionHandler(mvdXMLData, pluginClassLoader, targetNamespace));
+			registerNewRevisionHandler(uoid, serviceDescriptor, new ModelViewCheckerNewRevisionHandler(mvdXMLData, pluginClassLoader, targetNamespace));
 		}
 	}
 	

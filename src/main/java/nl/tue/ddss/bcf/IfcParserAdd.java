@@ -25,21 +25,21 @@ public class IfcParserAdd {
 
 		public IfcParserAdd() throws IOException, SAXException, ParserConfigurationException
 		{
-			try {
-				IfcStepDeserializer p21Parser = new IfcStepDeserializer();
-			SchemaDefinition schema = new SchemaLoader("Ifc2x3_TC1.exp")
-					.getSchema();
-			p21Parser.init(schema);
-				IfcModel ifcModel = (IfcModel) p21Parser.read(new File("simpel huisje.ifc"));
-				ReportWriter reportWriter = new ReportWriter(ifcModel);
-				String guid="1AbdMDvZjDiP8GfhziNl_j";
-				List<String> guids=new ArrayList<String>();
-				guids.add(guid);
-				reportWriter.addIssue("ifcSpatialStructureElement", guid, "comment",guids);
-				
-			} catch (DeserializeException e) {
-				e.printStackTrace();
-			}
+//			try {
+//				IfcStepDeserializer p21Parser = new IfcStepDeserializer();
+//			SchemaDefinition schema = new SchemaLoader("Ifc2x3_TC1.exp")
+//					.getSchema();
+//			p21Parser.init(schema);
+//				IfcModel ifcModel = (IfcModel) p21Parser.read(new File("simpel huisje.ifc"));
+//				ReportWriter reportWriter = new ReportWriter(ifcModel);
+//				String guid="1AbdMDvZjDiP8GfhziNl_j";
+//				List<String> guids=new ArrayList<String>();
+//				guids.add(guid);
+//				reportWriter.addIssue("ifcSpatialStructureElement", guid, "comment",guids);
+//				
+//			} catch (DeserializeException e) {
+//				e.printStackTrace();
+//			}
 			
 		}
 	}

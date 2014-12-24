@@ -17,6 +17,7 @@ import org.bimserver.interfaces.objects.SExtendedDataSchema;
 import org.bimserver.interfaces.objects.SFile;
 import org.bimserver.interfaces.objects.SIfcHeader;
 import org.bimserver.interfaces.objects.SObjectType;
+import org.bimserver.interfaces.objects.SProject;
 import org.bimserver.interfaces.objects.SSerializerPluginConfiguration;
 import org.bimserver.models.ifc2x3tc1.IfcProject;
 import org.bimserver.plugins.services.BimServerClientException;
@@ -47,7 +48,8 @@ public class ModelViewCheckerNewRevisionHandler implements NewRevisionHandler {
 			throws ServerException, UserException {
 		SSerializerPluginConfiguration sSerializer;
 		try {
-			IfcModelInterface model = bimServerClientInterface.getModel(poid, roid, false);
+			SProject project = bimServerClientInterface.getBimsie1ServiceInterface().getProjectByPoid(poid);
+			IfcModelInterface model = bimServerClientInterface.getModel(project, roid, false);
 			SIfcHeader ifcHeader = new SIfcHeader();
 			ifcHeader.setFilename("tmp");
 			ifcHeader.setTimeStamp(new Date());

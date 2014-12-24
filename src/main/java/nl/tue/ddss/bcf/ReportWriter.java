@@ -81,13 +81,13 @@ public class ReportWriter {
 	
 	public void exportToCollada(File ifcFile){
 		try {
-			BimServerClientFactory factory = new JsonBimServerClientFactory(
+			BimServerClientFactory factory = new JsonBimServerClientFactory(null, 
 					"http://localhost:8082//");
 			bimServerClient = factory
 					.create(new UsernamePasswordAuthenticationInfo(
 							"c.zhang@tue.nl", "chi"));
 			SProject project = bimServerClient.getBimsie1ServiceInterface()
-					.addProject("test" + Math.random());
+					.addProject("test" + Math.random(), "ifc2x3tc1");
 			long poid = project.getOid();
 			SDeserializerPluginConfiguration deserializer = bimServerClient
 					.getBimsie1ServiceInterface().getDeserializerByName(

@@ -78,11 +78,11 @@ public class IfcChecker {
 			throws DeserializeException {
 		this.ifcFile = ifcFile;
 		this.constraint = constraint;
-		IfcStepDeserializer p21Parser = new IfcStepDeserializer();
-		SchemaDefinition schema = new SchemaLoader(ifcSchema)
-				.getSchema();
-		p21Parser.init(schema);
-		this.ifcModel = (IfcModel) p21Parser.read(new File(ifcFile));
+//		IfcStepDeserializer p21Parser = new IfcStepDeserializer();
+//		SchemaDefinition schema = new SchemaLoader(ifcSchema)
+//				.getSchema();
+//		p21Parser.init(schema);
+//		this.ifcModel = (IfcModel) p21Parser.read(new File(ifcFile));
 	}
 
 	public void checkIfcModel(OutputStream outputStream) throws JAXBException {
