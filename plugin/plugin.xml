@@ -3,5 +3,6 @@
 	<PluginImplementation>
 		<interfaceClass>org.bimserver.plugins.services.ServicePlugin</interfaceClass>
 		<implementationClass>org.bimserver.plugin.modelviewchecker.ModelViewCheckerServicePlugin</implementationClass>
+		<enabled>true</enabled>
 	</PluginImplementation>
 </PluginDescriptor>
